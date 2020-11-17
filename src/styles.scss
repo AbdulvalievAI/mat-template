@@ -8,3 +8,9 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.offset-header {
+  margin-top: 64px;
+  @media (max-width: 599px) {
+    margin-top: 56px;
+  }
+}

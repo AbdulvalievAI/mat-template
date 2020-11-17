@@ -1,0 +1,53 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
+@mixin set-snack-bar-error($theme) {
+  $warnPalette: map-get($theme, warn);
+  .snack-bar-error {
+    background-color: mat-color($warnPalette, 900);
+    color: mat-color($warnPalette, 50);
+    .mat-simple-snackbar-action {
+      color: mat-color($warnPalette, 50);
+    }
+  }
+}
+
+@mixin generate-themes($nameTheme, $primaryColors, $accentColors, $warnColors) {
+  $primary: mat-palette($primaryColors);
+  $primary-contrast: mat-palette($primaryColors, default-contrast);
+
+  $accent: mat-palette($accentColors);
+  $accent-contrast: mat-palette($accentColors, default-contrast);
+
+  $warn: mat-palette($warnColors);
+  $warn-contrast: mat-palette($warnColors, default-contrast);
+
+  .theme-#{$nameTheme}-light {
+    $theme: mat-light-theme($primary, $accent, $warn);
+    @include angular-material-theme($theme);
+    @include set-snack-bar-error($theme);
+  }
+  .theme-#{$nameTheme}-light-contrast {
+    $theme: mat-light-theme(
+      $primary-contrast,
+      $accent-contrast,
+      $warn-contrast
+    );
+    @include angular-material-theme($theme);
+    @include set-snack-bar-error($theme);
+  }
+  .theme-#{$nameTheme}-dark {
+    $theme: mat-dark-theme($primary, $accent, $warn);
+    @include angular-material-theme($theme);
+    @include set-snack-bar-error($theme);
+  }
+  .theme-#{$nameTheme}-dark-contrast {
+    $theme: mat-dark-theme($primary-contrast, $accent-contrast, $warn-contrast);
+    @include angular-material-theme($theme);
+    @include set-snack-bar-error($theme);
+  }
+}
+
+@include generate-themes("purple", $mat-deep-purple, $mat-yellow, $mat-red);
+@include generate-themes("indigo", $mat-indigo, $mat-light-green, $mat-red);
+@include generate-themes("blueGrey", $mat-blue-grey, $mat-amber, $mat-red);

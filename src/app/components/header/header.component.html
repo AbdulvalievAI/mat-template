@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+  <h1 [routerLink]="'main'">My Blog</h1>
+  <span style="margin-left: auto"></span>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="settingsMenu"
+    aria-label="Example icon-button with a menu"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #settingsMenu="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="themesMenu">
+    <mat-icon>palette</mat-icon>
+    <span>Themes</span>
+  </button>
+</mat-menu>
+
+<mat-menu #themesMenu="matMenu">
+  <div class="customMatMenuItem">
+    <mat-slide-toggle
+      class="mat-menu-item"
+      #darkToggle
+      [(ngModel)]="isDark"
+      (change)="toggleHandler()"
+      (click)="$event.stopPropagation()"
+      >Dark</mat-slide-toggle
+    >
+  </div>
+  <div class="customMatMenuItem">
+    <mat-slide-toggle
+      class="mat-menu-item"
+      #contrastToggle
+      [(ngModel)]="isContrast"
+      (change)="toggleHandler()"
+      (click)="$event.stopPropagation()"
+      >Contrast</mat-slide-toggle
+    >
+  </div>
+  <button
+    *ngFor="let theme of this.themeService.getThemes()"
+    mat-menu-item
+    (click)="themHandler(theme.id)"
+  >
+    <mat-icon [ngStyle]="{ color: theme.colorPreview }">palette</mat-icon>
+    <span>{{ theme.title }}</span>
+  </button>
+</mat-menu>
